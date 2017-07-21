@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="COLOR_WHITE">0xFFFFFFFF</integer>
+    <integer name="COLOR_WEEKDAY">0xFF008000</integer>
+    <integer name="COLOR_SUNDAY">0xFFFF0000</integer>
+</resources>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ListPreference
+        android:defaultValue="0"
+        android:dialogTitle="@string/pref_t_font_type"
+        android:entries="@array/font_type_name"
+        android:entryValues="@array/font_type_code"
+        android:key="fontType"
+        android:persistent="false"
+        android:title="@string/pref_t_font_type"
+        />
+    <net.margaritov.preference.colorpicker.ColorPickerPreference
+        android:defaultValue="@integer/COLOR_WEEKDAY"
+        android:key="weekdayFontColour"
+        android:persistent="false"
+        />
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="customSundayFontColourFlag"
+        android:persistent="false"
+        android:summary="@string/pref_s_custom_sunday_font_colour"
+        android:title="@string/pref_t_custom_sunday_font_colour"
+        />
+    <net.margaritov.preference.colorpicker.ColorPickerPreference
+        android:defaultValue="@integer/COLOR_SUNDAY"
+        android:dependency="customSundayFontColourFlag"
+        android:key="sundayFontColour"
+        android:persistent="false"
+        />
+    <ListPreference
+        android:defaultValue="3"
+        android:dialogTitle="@string/pref_t_background_colour"
+        android:entries="@array/background_colour_name"
+        android:entryValues="@array/background_colour_code"
+        android:key="backgroundColour"
+        android:persistent="false"
+        android:title="@string/pref_t_background_colour"
+        />
+    <PreferenceScreen
+        android:key="appToOpen"
+        android:summary="@string/pref_t_app_to_open"
+        android:title="@string/pref_s_app_to_open"
+        />
+    <PreferenceScreen
+        android:key="addWidget"
+        android:title="@string/add_widget"
+        />
+
+    <PreferenceCategory
+        android:title="@string/pref_cat_t_about">
+
+        <PreferenceScreen
+            android:key="version"
+            android:summary="@string/about_s_copyright"
+            android:title="@string/about_t_version"
+            />
+        <PreferenceScreen
+            android:summary="@string/about_s_license"
+            android:title="@string/about_t_license"
+            />
+        <PreferenceScreen
+            android:summary="@string/about_s_source_code"
+            android:title="@string/about_t_source_code"
+            />
+    </PreferenceCategory>
+
+</PreferenceScreen>

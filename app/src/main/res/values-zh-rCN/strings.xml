@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">中国农历</string>
+    <string name="widget_name">中国农历</string>
+
+    <string name="add_widget">添加小部件</string>
+
+    <string name="pref_t_font_type">字体</string>
+    <string name="pref_i_ft_traditional">繁体</string>
+    <string name="pref_i_ft_simplified">简体</string>
+
+    <string name="pref_t_weekday_font_colour">平日字体颜色</string>
+
+    <string name="pref_t_custom_sunday_font_colour">自定义星期日字体颜色</string>
+    <string name="pref_s_custom_sunday_font_colour">跟平日颜色不同</string>
+
+    <string name="pref_t_sunday_font_colour">星期日字体颜色</string>
+
+    <string name="pref_t_background_colour">背景颜色</string>
+    <string name="pref_i_bc_transparent">透明</string>
+    <string name="pref_i_bc_white">白色</string>
+    <string name="pref_i_bc_white_percent_90">白色 10度透明</string>
+    <string name="pref_i_bc_white_percent_80">白色 20度透明</string>
+    <string name="pref_i_bc_white_percent_70">白色 30度透明</string>
+    <string name="pref_i_bc_white_percent_60">白色 40度透明</string>
+    <string name="pref_i_bc_white_percent_50">白色 50度透明</string>
+    <string name="pref_i_bc_white_percent_40">白色 60度透明</string>
+    <string name="pref_i_bc_white_percent_30">白色 70度透明</string>
+    <string name="pref_i_bc_white_percent_20">白色 80度透明</string>
+    <string name="pref_i_bc_white_percent_10">白色 90度透明</string>
+    <string name="pref_i_bc_black">黑色</string>
+    <string name="pref_i_bc_black_percent_90">黑色 10度透明</string>
+    <string name="pref_i_bc_black_percent_80">黑色 20度透明</string>
+    <string name="pref_i_bc_black_percent_70">黑色 30度透明</string>
+    <string name="pref_i_bc_black_percent_60">黑色 40度透明</string>
+    <string name="pref_i_bc_black_percent_50">黑色 50度透明</string>
+    <string name="pref_i_bc_black_percent_40">黑色 60度透明</string>
+    <string name="pref_i_bc_black_percent_30">黑色 70度透明</string>
+    <string name="pref_i_bc_black_percent_20">黑色 80度透明</string>
+    <string name="pref_i_bc_black_percent_10">黑色 90度透明</string>
+
+    <string name="pref_t_app_to_open">将打开的应用</string>
+    <string name="pref_s_app_to_open">点击后将打开的应用</string>
+
+    <string name="pref_cat_t_about">关于</string>
+    <string name="about_t_version">版本: %s</string>
+    <string name="about_t_license">许可证: Apache License 2.0</string>
+    <string name="about_t_source_code">源编码</string>
+</resources>

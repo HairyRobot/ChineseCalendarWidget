@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="font_type_name">
+        <item>@string/pref_i_ft_traditional</item>
+        <item>@string/pref_i_ft_simplified</item>
+    </string-array>
+    <string-array name="font_type_code">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+    <string-array name="background_colour_name">
+        <item>@string/pref_i_bc_transparent</item>
+        <item>@string/pref_i_bc_white</item>
+        <item>@string/pref_i_bc_white_percent_90</item>
+        <item>@string/pref_i_bc_white_percent_80</item>
+        <item>@string/pref_i_bc_white_percent_70</item>
+        <item>@string/pref_i_bc_white_percent_60</item>
+        <item>@string/pref_i_bc_white_percent_50</item>
+        <item>@string/pref_i_bc_white_percent_40</item>
+        <item>@string/pref_i_bc_white_percent_30</item>
+        <item>@string/pref_i_bc_white_percent_20</item>
+        <item>@string/pref_i_bc_white_percent_10</item>
+        <item>@string/pref_i_bc_black</item>
+        <item>@string/pref_i_bc_black_percent_90</item>
+        <item>@string/pref_i_bc_black_percent_80</item>
+        <item>@string/pref_i_bc_black_percent_70</item>
+        <item>@string/pref_i_bc_black_percent_60</item>
+        <item>@string/pref_i_bc_black_percent_50</item>
+        <item>@string/pref_i_bc_black_percent_40</item>
+        <item>@string/pref_i_bc_black_percent_30</item>
+        <item>@string/pref_i_bc_black_percent_20</item>
+        <item>@string/pref_i_bc_black_percent_10</item>
+    </string-array>
+    <string-array name="background_colour_code">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+        <item>13</item>
+        <item>14</item>
+        <item>15</item>
+        <item>16</item>
+        <item>17</item>
+        <item>18</item>
+        <item>19</item>
+        <item>20</item>
+    </string-array>
+</resources>

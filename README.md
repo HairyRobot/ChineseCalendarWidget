@@ -1,6 +1,8 @@
 Chinese Calendar Widget (中國農曆小工具)
 =====================================
 
+<img src="screenshots/ChineseCalendarWidget1.png" height="400" alt="Screenshot"/> <img src="screenshots/ChineseCalendarWidget2.png" height="400" alt="Screenshot"/>
+
 A resizable Chinese calendar widget that shows the Lunar Year, Zodiac, Lunar Month & Date.
 
 **Note:**
@@ -10,7 +12,7 @@ This doesn't open, it is a widget not an app. Add on home screen with
  - Apps -> Widgets -> Chinese Calendar Widget
 
 <a href="https://play.google.com/store/apps/details?id=hk.ccw.chinesecalendarwidget">
-  <img alt="Get it on Google Play" height="50"
+  <img alt="Get it on Google Play" height="60"
        src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" />
 </a>
 

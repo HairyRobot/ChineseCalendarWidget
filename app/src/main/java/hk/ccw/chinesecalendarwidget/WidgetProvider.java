@@ -21,7 +21,7 @@ public class WidgetProvider extends AppWidgetProvider {
 	private static final double TEXT_HEIGHT = 0.7;
 
 	static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId) {
-		scheduleAlarm(context, appWidgetId);
+		scheduleAlarm(context);
 		Pair<Integer, Integer> availableSize = getTextAvailableSize(context, appWidgetId);
 		if (availableSize == null) {
 			return;
@@ -108,14 +108,10 @@ public class WidgetProvider extends AppWidgetProvider {
 	public void onDeleted(Context context, int[] appWidgetIds) {
 		for (int appWidgetId : appWidgetIds) {
 			Prefs.delete(context, appWidgetId);
-			Intent intent = new Intent(context, UpdateWidgetReceiver.class);
-			PendingIntent pi = PendingIntent.getBroadcast(context, appWidgetId + 1000, intent, 0);
-			AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-			am.cancel(pi);
 		}
 	}
 
-	private static void scheduleAlarm(Context context, int appWidgetId) {
+	private static void scheduleAlarm(Context context) {
 		Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.DAY_OF_MONTH, 1);
 		cal.set(Calendar.HOUR_OF_DAY, 0);
@@ -123,8 +119,7 @@ public class WidgetProvider extends AppWidgetProvider {
 		cal.set(Calendar.SECOND, 0);
 		cal.set(Calendar.MILLISECOND, 0);
 		Intent intent = new Intent(context, UpdateWidgetReceiver.class);
-		intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
-		PendingIntent pi = PendingIntent.getBroadcast(context, appWidgetId + 1000, intent,
+		PendingIntent pi = PendingIntent.getBroadcast(context, 0, intent,
 				PendingIntent.FLAG_UPDATE_CURRENT);
 		AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {

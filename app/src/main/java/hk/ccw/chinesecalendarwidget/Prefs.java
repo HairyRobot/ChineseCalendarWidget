@@ -9,6 +9,8 @@ import org.json.JSONObject;
 
 class Prefs {
 
+	static final String PREF_TIMEZONE = "timezone";
+
 	private static final String PREF_PREFIX_KEY = "appWidget_";
 
 	static final String DEFAULT_FONT_TYPE = "0";
@@ -24,7 +26,7 @@ class Prefs {
 	static final String BACKGROUND_COLOUR = "backgroundColour";
 	static final String APP_TO_OPEN = "appToOpen";
 
-	private static SharedPreferences getPrefs(Context context) {
+	static SharedPreferences getPrefs(Context context) {
 		return PreferenceManager.getDefaultSharedPreferences(context);
 	}
 

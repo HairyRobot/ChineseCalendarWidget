@@ -2,6 +2,7 @@ package hk.ccw.chinesecalendarwidget;
 
 import android.app.IntentService;
 import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.Intent;
 
 public class UpdateWidgetService extends IntentService {
@@ -13,8 +14,10 @@ public class UpdateWidgetService extends IntentService {
 	@Override
 	protected void onHandleIntent(Intent intent) {
 		AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
-		int appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
-				AppWidgetManager.INVALID_APPWIDGET_ID);
-		WidgetProvider.updateAppWidget(this, appWidgetManager, appWidgetId);
+		int appWidgetIds[] = appWidgetManager.getAppWidgetIds(new ComponentName(this,
+				WidgetProvider.class));
+		for (int appWidgetId : appWidgetIds) {
+			WidgetProvider.updateAppWidget(this, appWidgetManager, appWidgetId);
+		}
 	}
 }

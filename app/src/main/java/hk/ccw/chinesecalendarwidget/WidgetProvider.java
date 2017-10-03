@@ -81,10 +81,12 @@ public class WidgetProvider extends AppWidgetProvider {
 		if (!TextUtils.isEmpty(packageName)) {
 			PackageManager manager = context.getPackageManager();
 			Intent i = manager.getLaunchIntentForPackage(packageName);
-			i.addCategory(Intent.CATEGORY_LAUNCHER);
-			i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-			PendingIntent pi = PendingIntent.getActivity(context, appWidgetId, i, 0);
-			remoteViews.setOnClickPendingIntent(R.id.widget_panel, pi);
+			if (i != null) {
+				i.addCategory(Intent.CATEGORY_LAUNCHER);
+				i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+				PendingIntent pi = PendingIntent.getActivity(context, appWidgetId, i, 0);
+				remoteViews.setOnClickPendingIntent(R.id.widget_panel, pi);
+			}
 		}
 		appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
 	}

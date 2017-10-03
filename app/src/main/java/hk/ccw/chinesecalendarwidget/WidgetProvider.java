@@ -7,6 +7,7 @@ import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Pair;
@@ -124,7 +125,11 @@ public class WidgetProvider extends AppWidgetProvider {
 		PendingIntent pi = PendingIntent.getBroadcast(context, appWidgetId + 1000, intent,
 				PendingIntent.FLAG_UPDATE_CURRENT);
 		AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-		am.set(AlarmManager.RTC, cal.getTimeInMillis(), pi);
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+			am.setExact(AlarmManager.RTC, cal.getTimeInMillis(), pi);
+		} else {
+			am.set(AlarmManager.RTC, cal.getTimeInMillis(), pi);
+		}
 	}
 
 	private static Pair<Integer, Integer> getTextAvailableSize(Context context, int widgetId) {

@@ -1,6 +1,13 @@
 Changelog
 =========
 
+v1.2.0
+------
+ - Force hourly widget update, because some devices is ignoring the mid-night alarm.
+ - Added icon to app to open list.
+ - Updated targetSdkVersion to 26.
+ - md5: 2ac00aa371e918838c5b98bd3d169d6a
+
 v1.1.0
 ------
  - Fixed fc on widget resizing.

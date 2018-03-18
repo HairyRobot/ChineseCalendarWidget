@@ -16,6 +16,9 @@ import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
 import android.preference.SwitchPreference;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Toast;
 
 import net.margaritov.preference.colorpicker.ColorPickerPreference;
 
@@ -117,7 +120,7 @@ public class WidgetProviderConfigureFragment extends PreferenceFragment {
 			@Override
 			public boolean onPreferenceClick(Preference preference) {
 				if (sAappInfo != null) {
-					showSelectAppDialog(getActivity());
+					showSelectAppDialog();
 				}
 				return true;
 			}
@@ -221,22 +224,25 @@ public class WidgetProviderConfigureFragment extends PreferenceFragment {
 		return appInfos;
 	}
 
-	private void showSelectAppDialog(final Context context) {
-		final PackageManager pm = context.getPackageManager();
-		final CharSequence[] items;
-		items = new CharSequence[sAappInfo.size()];
-
+	private void showSelectAppDialog() {
+		final List<SelectAppEntry> items;
+		items = new ArrayList<>();
 		for (int i = 0; i < sAappInfo.size(); i++) {
-			items[i] = String.valueOf(pm.getApplicationLabel(sAappInfo.get(i)) + "\n  "
-					+ sAappInfo.get(i).packageName
-			);
+			SelectAppEntry item = new SelectAppEntry(getActivity(), sAappInfo.get(i).packageName);
+			items.add(item);
 		}
 
-		AlertDialog.Builder builder = new AlertDialog.Builder(context);
-		builder.setItems(items, new DialogInterface.OnClickListener() {
+		LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		View view = inflater.inflate(R.layout.dialog_v_main, null);
+		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+		SelectAppAdapter adapter = new SelectAppAdapter(getActivity());
+		adapter.setData(items);
+		builder.setView(view);
+		builder.setAdapter(adapter, new DialogInterface.OnClickListener() {
 			@Override
-			public void onClick(DialogInterface dialog, int item) {
-				mAppToOpen = sAappInfo.get(item).packageName;
+			public void onClick(DialogInterface dialog, int which) {
+				mAppToOpen = items.get(which).getPackageName();
+				Toast.makeText(getActivity(), items.get(which).getAppName(), Toast.LENGTH_SHORT).show();
 			}
 		});
 		builder.setOnCancelListener(new DialogInterface.OnCancelListener() {

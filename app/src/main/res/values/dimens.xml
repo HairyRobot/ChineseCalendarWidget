@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="icon_size">40dp</dimen>
 
     <!--
 Refer to App Widget Documentation for margin information

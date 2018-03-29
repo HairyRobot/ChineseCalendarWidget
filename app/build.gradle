@@ -6,8 +6,8 @@ android {
         applicationId "hk.ccw.chinesecalendarwidget"
         minSdkVersion 17
         targetSdkVersion 26
-        versionCode 100200
-        versionName "1.2.0"
+        versionCode 100300
+        versionName "1.3.0"
     }
     lintOptions {
         disable 'MissingTranslation'

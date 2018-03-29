@@ -3,6 +3,7 @@ package hk.ccw.chinesecalendarwidget;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 
 import java.util.TimeZone;
 
@@ -24,6 +25,10 @@ public class UpdateWidgetReceiver extends BroadcastReceiver {
 			}
 		}
 
-		context.startService(new Intent(context, UpdateWidgetService.class));
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {    // API-26
+			context.startForegroundService(new Intent(context, UpdateWidgetService.class));
+		} else {
+			context.startService(new Intent(context, UpdateWidgetService.class));
+		}
 	}
 }

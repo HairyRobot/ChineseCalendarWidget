@@ -1,6 +1,11 @@
 Changelog
 =========
 
+v1.3.0
+------
+ - Fixed fc due to background execution limits on Android 8.
+ - md5: 5f2b1256331394288febaf87cf1b17cd
+
 v1.2.0
 ------
  - Force hourly widget update, because some devices is ignoring the mid-night alarm.

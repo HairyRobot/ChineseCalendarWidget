@@ -7,16 +7,18 @@ import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.widget.ImageView;
 
+import java.lang.ref.WeakReference;
+
 public class AppIconAsyncTask extends AsyncTask<Void, Integer, Drawable> {
 
-	private Context mContext;
-	private ImageView mImageView;
+	private WeakReference<Context> mContextRef;
+	private WeakReference<ImageView> mImageViewRef;
 	private String mPackageName;
 	private boolean mCancel = false;
 
 	public AppIconAsyncTask(Context context, ImageView imageView, String packageName) {
-		mContext = context;
-		mImageView = imageView;
+		mContextRef = new WeakReference<>(context);
+		mImageViewRef = new WeakReference<>(imageView);
 		mPackageName = packageName;
 	}
 
@@ -31,7 +33,9 @@ public class AppIconAsyncTask extends AsyncTask<Void, Integer, Drawable> {
 
 	@Override
 	protected Drawable doInBackground(Void... voids) {
-		if (!mCancel) return getAppIcon(mContext, mPackageName);
+		Context context = mContextRef.get();
+		if (context == null) return null;
+		if (!mCancel) return getAppIcon(context, mPackageName);
 		return null;
 	}
 
@@ -39,7 +43,8 @@ public class AppIconAsyncTask extends AsyncTask<Void, Integer, Drawable> {
 	protected void onPostExecute(Drawable drawable) {
 		super.onPostExecute(drawable);
 		if (drawable != null && !mCancel) {
-			mImageView.setImageDrawable(drawable);
+			ImageView imageView = mImageViewRef.get();
+			if (imageView != null) imageView.setImageDrawable(drawable);
 		}
 	}
 

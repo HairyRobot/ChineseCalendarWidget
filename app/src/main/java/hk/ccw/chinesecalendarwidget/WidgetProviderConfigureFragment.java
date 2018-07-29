@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import net.margaritov.preference.colorpicker.ColorPickerPreference;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -29,7 +30,7 @@ import java.util.List;
 
 public class WidgetProviderConfigureFragment extends PreferenceFragment {
 
-	private static List<ApplicationInfo> sAappInfo;
+	private static List<ApplicationInfo> sAppsInfo;
 
 	private ListPreference mFontTypeView;
 	private ListPreference mBackgroundColourView;
@@ -44,7 +45,7 @@ public class WidgetProviderConfigureFragment extends PreferenceFragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		sAappInfo = null;
+		sAppsInfo = null;
 		mAppToOpen = "";
 
 		Bundle extras = getActivity().getIntent().getExtras();
@@ -119,7 +120,7 @@ public class WidgetProviderConfigureFragment extends PreferenceFragment {
 		appToOpenView.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
 			@Override
 			public boolean onPreferenceClick(Preference preference) {
-				if (sAappInfo != null) {
+				if (sAppsInfo != null) {
 					showSelectAppDialog();
 				}
 				return true;
@@ -138,13 +139,8 @@ public class WidgetProviderConfigureFragment extends PreferenceFragment {
 		PreferenceScreen versionView = (PreferenceScreen) findPreference("version");
 		versionView.setTitle(getString(R.string.about_t_version, getAppVersionName(getActivity())));
 
-		new AsyncTask<Void, Void, Void>() {
-			@Override
-			protected Void doInBackground(Void... params) {
-				sAappInfo = getLaunchable(getActivity());
-				return null;
-			}
-		}.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+		GetAppListAsyncTask asyncTask = new GetAppListAsyncTask(getActivity());
+		asyncTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 	}
 
 	private void setFontTypeSummary(String value) {
@@ -227,8 +223,8 @@ public class WidgetProviderConfigureFragment extends PreferenceFragment {
 	private void showSelectAppDialog() {
 		final List<SelectAppEntry> items;
 		items = new ArrayList<>();
-		for (int i = 0; i < sAappInfo.size(); i++) {
-			SelectAppEntry item = new SelectAppEntry(getActivity(), sAappInfo.get(i).packageName);
+		for (int i = 0; i < sAppsInfo.size(); i++) {
+			SelectAppEntry item = new SelectAppEntry(getActivity(), sAppsInfo.get(i).packageName);
 			items.add(item);
 		}
 
@@ -253,5 +249,22 @@ public class WidgetProviderConfigureFragment extends PreferenceFragment {
 		});
 		builder.create();
 		builder.show();
+	}
+
+	static class GetAppListAsyncTask extends AsyncTask<Void, Void, Void> {
+		private WeakReference<Activity> mActivityRef;
+
+		GetAppListAsyncTask(Activity activity) {
+			mActivityRef = new WeakReference<>(activity);
+		}
+
+		@Override
+		protected Void doInBackground(Void... voids) {
+			Activity activity = mActivityRef.get();
+			if (activity != null) {
+				sAppsInfo = getLaunchable(activity);
+			}
+			return null;
+		}
 	}
 }

@@ -1,6 +1,12 @@
 Changelog
 =========
 
+v1.4.0
+------
+ - Added option to display hour (時辰).
+ - md5: 8e8d9afc201a19095b26aaf9cbc891e9
+ - md5(gplay): 066120a7d2e1cc7a789eeb6dbdd28b03
+
 v1.3.0
 ------
  - Fixed fc due to background execution limits on Android 8.

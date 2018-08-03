@@ -1,15 +1,20 @@
 package hk.ccw.chinesecalendarwidget;
 
+import android.annotation.TargetApi;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.Pair;
 import android.util.TypedValue;
 import android.widget.RemoteViews;
@@ -17,11 +22,13 @@ import android.widget.RemoteViews;
 import java.util.Calendar;
 
 public class WidgetProvider extends AppWidgetProvider {
+	private static final String TAG = WidgetProvider.class.getSimpleName();
 
+	private static final int JOB_ID_ALARM = 101;
 	private static final double TEXT_HEIGHT = 0.7;
 
-	static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId) {
-		scheduleAlarm(context);
+	private static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId) {
+		Log.i(TAG, "updateAppWidget: " + appWidgetId);
 		Pair<Integer, Integer> availableSize = getTextAvailableSize(context, appWidgetId);
 		if (availableSize == null) {
 			return;
@@ -35,8 +42,10 @@ public class WidgetProvider extends AppWidgetProvider {
 
 		LunarCalendarUtil.setFontType(Prefs.getFontType(context, appWidgetId));
 		StringBuilder buf = new StringBuilder();
-		// 辛丑年
+		// 辛丑
 		buf.append(LunarCalendarUtil.numToChineseYear(lunarDate[0]));
+		// 年
+		buf.append(LunarCalendarUtil.getMiscName(4)); // 年
 		// (肖牛)
 		buf.append("(")
 				.append(LunarCalendarUtil.getMiscName(0)) // 肖
@@ -53,6 +62,14 @@ public class WidgetProvider extends AppWidgetProvider {
 		buf.append(LunarCalendarUtil.numToChineseDay(lunarDate[2]));
 		// 日
 		buf.append(LunarCalendarUtil.getMiscName(6)); // 日
+		// 午
+		if (Prefs.getShowHourFlag(context, appWidgetId)) {
+			Calendar now = Calendar.getInstance();
+			int hour = now.get(Calendar.HOUR_OF_DAY);
+			buf.append(LunarCalendarUtil.numToChineseHour(hour));
+			// 時
+			buf.append(LunarCalendarUtil.getMiscName(7)); // 時
+		}
 		String widgetText2 = buf.toString();
 
 		float widgetText1Size = TextSizer.getTextSize(context, widgetText1, availableSize);
@@ -93,40 +110,68 @@ public class WidgetProvider extends AppWidgetProvider {
 
 	@Override
 	public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
+		Log.i(TAG, "onUpdate");
 		for (int appWidgetId : appWidgetIds) {
 			updateAppWidget(context, appWidgetManager, appWidgetId);
+		}
+		if (appWidgetIds.length > 0) {
+			scheduleAlarm(context);
 		}
 	}
 
 	@Override
 	public void onAppWidgetOptionsChanged(Context context, AppWidgetManager appWidgetManager,
 										  int appWidgetId, Bundle newOptions) {
+		Log.i(TAG, "onAppWidgetOptionsChanged");
 		updateAppWidget(context, appWidgetManager, appWidgetId);
 	}
 
 	@Override
 	public void onDeleted(Context context, int[] appWidgetIds) {
+		Log.i(TAG, "onDeleted");
 		for (int appWidgetId : appWidgetIds) {
 			Prefs.delete(context, appWidgetId);
+			Log.d(TAG, "deleted appWidgetId: " + appWidgetId);
 		}
 	}
 
 	private static void scheduleAlarm(Context context) {
-		Calendar cal = Calendar.getInstance();
-		cal.add(Calendar.DAY_OF_MONTH, 1);
-		cal.set(Calendar.HOUR_OF_DAY, 0);
-		cal.set(Calendar.MINUTE, 0);
-		cal.set(Calendar.SECOND, 0);
-		cal.set(Calendar.MILLISECOND, 0);
+		Log.i(TAG, "scheduleAlarm");
 		Intent intent = new Intent(context, UpdateWidgetReceiver.class);
 		PendingIntent pi = PendingIntent.getBroadcast(context, 0, intent,
 				PendingIntent.FLAG_UPDATE_CURRENT);
 		AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-			am.setExact(AlarmManager.RTC, cal.getTimeInMillis(), pi);
+		Calendar now = Calendar.getInstance();
+		Calendar nextHour = Calendar.getInstance();
+		nextHour.add(Calendar.HOUR, 1);
+		nextHour.set(Calendar.MINUTE, 0);
+		nextHour.set(Calendar.SECOND, 0);
+		Log.d(TAG, "now: " + now.getTimeInMillis());
+		Log.d(TAG, "nextHour: " + nextHour.getTimeInMillis());
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {    // API-21
+			long duration = nextHour.getTimeInMillis() - now.getTimeInMillis();
+			Log.d(TAG, "duration: " + duration);
+			scheduleJobAlarm(context, duration);
+		} else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {    // API-19
+			am.setExact(AlarmManager.RTC, nextHour.getTimeInMillis(), pi);
 		} else {
-			am.set(AlarmManager.RTC, cal.getTimeInMillis(), pi);
+			am.set(AlarmManager.RTC, nextHour.getTimeInMillis(), pi);
 		}
+	}
+
+	@TargetApi(Build.VERSION_CODES.LOLLIPOP)
+	private static void scheduleJobAlarm(Context context, long duration) {
+		ComponentName componentName = new ComponentName(context, JobUpdateWidgetService.class);
+		JobInfo.Builder builder = new JobInfo.Builder(JOB_ID_ALARM, componentName);
+		if (duration < 0) {
+			duration = 1000 * 60 * 60;    // 60 minutes
+		}
+		builder.setMinimumLatency(duration);
+		builder.setOverrideDeadline(duration);
+		builder.setRequiresDeviceIdle(false);
+		JobInfo jobInfo = builder.build();
+		JobScheduler jobScheduler = (JobScheduler) context.getSystemService(Context.JOB_SCHEDULER_SERVICE);
+		jobScheduler.schedule(jobInfo);
 	}
 
 	private static Pair<Integer, Integer> getTextAvailableSize(Context context, int widgetId) {

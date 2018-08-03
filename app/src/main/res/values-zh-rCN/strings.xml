@@ -9,6 +9,8 @@
     <string name="pref_i_ft_traditional">繁体</string>
     <string name="pref_i_ft_simplified">简体</string>
 
+    <string name="pref_t_display_hour">显示时辰</string>
+
     <string name="pref_t_weekday_font_colour">平日字体颜色</string>
 
     <string name="pref_t_custom_sunday_font_colour">自定义星期日字体颜色</string>

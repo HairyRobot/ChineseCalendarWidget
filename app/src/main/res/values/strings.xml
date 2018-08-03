@@ -9,6 +9,8 @@
     <string name="pref_i_ft_traditional">Traditional</string>
     <string name="pref_i_ft_simplified">Simplified</string>
 
+    <string name="pref_t_display_hour">Display hour</string>
+
     <string name="pref_t_weekday_font_colour">Weekday font colour</string>
 
     <string name="pref_t_custom_sunday_font_colour">Custom Sunday font colour</string>
@@ -44,7 +46,7 @@
 
     <string name="pref_cat_t_about">About</string>
     <string name="about_t_version">Version: %s</string>
-    <string name="about_s_copyright">Copyright 2017 HairyRobot. All rights reserved.</string>
+    <string name="about_s_copyright">Copyright 2017–2018 HairyRobot. All rights reserved.</string>
     <string name="about_t_license">License: Apache License 2.0</string>
     <string name="about_s_license">http://www.apache.org/licenses/LICENSE-2.0</string>
     <string name="about_t_source_code">Source code</string>

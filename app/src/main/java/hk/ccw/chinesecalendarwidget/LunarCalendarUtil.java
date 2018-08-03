@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 HairyRobot
+ * Copyright 2017-2018 HairyRobot
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,8 +62,13 @@ public class LunarCalendarUtil {
 
 	// 雜項名
 	private static final String[][] MISC_NAMES = {
-			{"肖", "閏", "大", "小", "年", "月", "日"},
-			{"肖", "闰", "大", "小", "年", "月", "日"}
+			{"肖", "閏", "大", "小", "年", "月", "日", "時"},
+			{"肖", "闰", "大", "小", "年", "月", "日", "时"}
+	};
+
+	// 十二時辰對照表 - [23:00,01:00)為子時, [01:00,03:00)為丑時
+	private static final int[] BRANCH_INDEX = {
+			0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11, 0
 	};
 
 	private static int sFontType = 0;
@@ -102,7 +107,7 @@ public class LunarCalendarUtil {
 	 * @param year 要計算的年份
 	 * @return year年的地支，0為子..11為亥
 	 */
-	public static int getEarthlyBranche(int year) {
+	public static int getEarthlyBranch(int year) {
 		return (year + 8) % 12;
 	}
 
@@ -124,8 +129,7 @@ public class LunarCalendarUtil {
 	 */
 	public static String numToChineseYear(int year) {
 		return STEM_NAMES[getHeavenlyStem(year)]
-				+ BRANCH_NAMES[getEarthlyBranche(year)]
-				+ MISC_NAMES[sFontType][4];
+				+ BRANCH_NAMES[getEarthlyBranch(year)];
 	}
 
 	/**
@@ -149,7 +153,17 @@ public class LunarCalendarUtil {
 	}
 
 	/**
-	 * @param index 索引 (0为"肖", "閏", "大", "小", "年", "月", "日")
+	 * 數字24小時轉換為時辰的漢字
+	 *
+	 * @param hour 小時 (0..23)
+	 * @return 時辰的漢字
+	 */
+	public static String numToChineseHour(int hour) {
+		return BRANCH_NAMES[BRANCH_INDEX[hour]];
+	}
+
+	/**
+	 * @param index 索引 (0為"肖", "閏", "大", "小", "年", "月", "日", "時")
 	 * @return 雜項名的漢字
 	 */
 	public static String getMiscName(int index) {

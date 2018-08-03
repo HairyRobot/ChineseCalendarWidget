@@ -10,8 +10,10 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.util.Log;
 
 public class UpdateWidgetService extends IntentService {
+	private static final String TAG = UpdateWidgetService.class.getSimpleName();
 
 	private static final String NOTIFICATION_CHANNEL_ID = "channelId";
 	private static final String NOTIFICATION_CHANNEL_NAME = "channelName";
@@ -31,12 +33,15 @@ public class UpdateWidgetService extends IntentService {
 
 	@Override
 	protected void onHandleIntent(Intent intent) {
+		Log.i(TAG, "onHandleIntent");
 		AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
 		int appWidgetIds[] = appWidgetManager.getAppWidgetIds(new ComponentName(this,
 				WidgetProvider.class));
-		for (int appWidgetId : appWidgetIds) {
-			WidgetProvider.updateAppWidget(this, appWidgetManager, appWidgetId);
-		}
+		Intent broadcast = new Intent(this, WidgetProvider.class);
+		broadcast.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+		broadcast.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
+		sendBroadcast(broadcast);
+
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {    // API-26
 			stopForeground(true);
 		}

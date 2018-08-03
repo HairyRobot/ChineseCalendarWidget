@@ -11,6 +11,12 @@
         android:persistent="false"
         android:title="@string/pref_t_font_type"
         />
+    <SwitchPreference
+        android:defaultValue="false"
+        android:key="showHourFlag"
+        android:persistent="false"
+        android:title="@string/pref_t_display_hour"
+        />
     <net.margaritov.preference.colorpicker.ColorPickerPreference
         android:defaultValue="@integer/COLOR_WEEKDAY"
         android:key="weekdayFontColour"

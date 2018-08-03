@@ -20,6 +20,7 @@ class Prefs {
 	private static final String DEFAULT_APP_TO_OPEN = "";
 
 	static final String FONT_TYPE = "fontType";
+	static final String SHOW_HOUR_FLAG = "showHourFlag";
 	static final String WEEKDAY_FONT_COLOUR = "weekdayFontColour";
 	static final String CUSTOM_SUNDAY_FONT_COLOUR_FLAG = "customSundayFontColourFlag";
 	static final String SUNDAY_FONT_COLOUR = "sundayFontColour";
@@ -33,6 +34,11 @@ class Prefs {
 	static int getFontType(Context context, int widgetId) {
 		String value = getValue(context, widgetId, FONT_TYPE, DEFAULT_FONT_TYPE);
 		return Integer.valueOf(value);
+	}
+
+	static boolean getShowHourFlag(Context context, int widgetId) {
+		String value = getValue(context, widgetId, SHOW_HOUR_FLAG, "false");
+		return Boolean.valueOf(value);
 	}
 
 	static int getWeekdayFontColour(Context context, int widgetId) {
@@ -113,11 +119,13 @@ class Prefs {
 	}
 
 	static void setValues(Context context, int widgetId, String fontType,
+						  Boolean showHourFlag,
 						  int weekdayFontColour, int sundayFontColour, String backgroundColour,
 						  String appToOpen) {
 		JSONObject obj = new JSONObject();
 		try {
 			obj.put(FONT_TYPE, fontType);
+			obj.put(SHOW_HOUR_FLAG, showHourFlag.toString());
 			obj.put(WEEKDAY_FONT_COLOUR, "" + weekdayFontColour);
 			obj.put(SUNDAY_FONT_COLOUR, "" + sundayFontColour);
 			obj.put(BACKGROUND_COLOUR, backgroundColour);

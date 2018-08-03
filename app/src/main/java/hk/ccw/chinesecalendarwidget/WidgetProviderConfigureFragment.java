@@ -16,6 +16,7 @@ import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
 import android.preference.SwitchPreference;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Toast;
@@ -29,6 +30,7 @@ import java.util.HashSet;
 import java.util.List;
 
 public class WidgetProviderConfigureFragment extends PreferenceFragment {
+	private static final String TAG = WidgetProviderConfigureFragment.class.getSimpleName();
 
 	private static List<ApplicationInfo> sAppsInfo;
 
@@ -36,6 +38,7 @@ public class WidgetProviderConfigureFragment extends PreferenceFragment {
 	private ListPreference mBackgroundColourView;
 
 	private int mAppWidgetId;
+	private boolean mShowHourFlag;
 	private int mWeekdayFontColour;
 	private int mSundayFontColour;
 	private boolean mCustomSundayFontColourFlag;
@@ -62,6 +65,18 @@ public class WidgetProviderConfigureFragment extends PreferenceFragment {
 			@Override
 			public boolean onPreferenceChange(Preference preference, Object newValue) {
 				setFontTypeSummary(newValue.toString());
+				return true;
+			}
+		});
+
+		SwitchPreference showTimeFlagView = (SwitchPreference) findPreference(Prefs.SHOW_HOUR_FLAG);
+		mShowHourFlag = false;
+		showTimeFlagView.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+			@Override
+			public boolean onPreferenceChange(Preference preference, Object newValue) {
+				if (newValue instanceof Boolean) {
+					mShowHourFlag = (Boolean) newValue;
+				}
 				return true;
 			}
 		});
@@ -172,16 +187,20 @@ public class WidgetProviderConfigureFragment extends PreferenceFragment {
 	}
 
 	private void saveWidgetSettings() {
-		Intent broadcast = new Intent(getActivity(), WidgetProvider.class);
-		broadcast.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-		broadcast.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, new int[]{mAppWidgetId});
-		getActivity().sendBroadcast(broadcast);
+		Log.i(TAG, "saveWidgetSettings");
 		if (!mCustomSundayFontColourFlag) {
 			mSundayFontColour = mWeekdayFontColour;
 		}
 		Prefs.setValues(getActivity(), mAppWidgetId, mFontTypeView.getValue(),
+				mShowHourFlag,
 				mWeekdayFontColour, mSundayFontColour, mBackgroundColourView.getValue(),
 				mAppToOpen);
+
+		Intent broadcast = new Intent(getActivity(), WidgetProvider.class);
+		broadcast.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+		broadcast.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, new int[]{mAppWidgetId});
+		getActivity().sendBroadcast(broadcast);
+
 		Intent result = new Intent();
 		result.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, mAppWidgetId);
 		getActivity().setResult(Activity.RESULT_OK, result);

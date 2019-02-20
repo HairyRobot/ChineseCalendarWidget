@@ -7,12 +7,15 @@ import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Build;
+import android.os.PowerManager;
 import android.util.Log;
 
 public class UpdateWidgetService extends IntentService {
 	private static final String TAG = UpdateWidgetService.class.getSimpleName();
 
 	private static final int NOTIFICATION_ID = 3142;
+
+	private PowerManager.WakeLock wakeLock;
 
 	public UpdateWidgetService() {
 		super("UpdateWidgetService");
@@ -22,6 +25,10 @@ public class UpdateWidgetService extends IntentService {
 	public void onCreate() {
 		super.onCreate();
 		Log.i(TAG, "onCreate");
+		PowerManager powerManager = (PowerManager) getSystemService(POWER_SERVICE);
+		wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,
+				"UpdateWidgetService:Wakelock");
+		wakeLock.acquire(3000L);
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {    // API-26
 			startForeground(NOTIFICATION_ID, buildForegroundNotification());
 		}
@@ -43,6 +50,7 @@ public class UpdateWidgetService extends IntentService {
 	public void onDestroy() {
 		super.onDestroy();
 		Log.i(TAG, "onDestroy");
+		wakeLock.release();
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {    // API-26
 			stopForeground(true);
 		}

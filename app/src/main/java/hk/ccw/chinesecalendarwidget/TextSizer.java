@@ -15,7 +15,7 @@ class TextSizer {
 	static float getTextSize(Context context, String text, Pair<Integer, Integer> availableSize) {
 		@SuppressLint("InflateParams")
 		ViewGroup vg = (ViewGroup) LayoutInflater.from(context).inflate(R.layout.widget, null);
-		TextView textView = (TextView) vg.findViewById(R.id.text1);
+		TextView textView = vg.findViewById(R.id.text1);
 		return getHighestInBounds(textView, text, availableSize.first, availableSize.second);
 	}
 

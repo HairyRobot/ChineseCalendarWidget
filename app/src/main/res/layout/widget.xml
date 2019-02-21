@@ -33,8 +33,7 @@
                 android:layout_marginStart="4dp"
                 android:layout_marginTop="4dp"
                 android:gravity="center"
-                tools:text="己辛年(肖牛)"
-                />
+                tools:text="己辛年(肖牛)"/>
 
             <TextView
                 android:id="@+id/text2"
@@ -48,8 +47,8 @@
                 android:layout_marginStart="4dp"
                 android:layout_marginTop="2dp"
                 android:gravity="center"
-                tools:text="閏十二月廿八日"
-                />
+                tools:text="閏十二月廿八日"/>
+
         </LinearLayout>
 
     </RelativeLayout>

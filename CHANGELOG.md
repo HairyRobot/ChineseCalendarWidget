@@ -1,6 +1,15 @@
 Changelog
 =========
 
+v1.5.0
+------
+ - Fixed Traditional Chinese display.
+ - Added Ignore Battery Optimization handling.
+ - Added Wake Lock handling.
+ - Updated notification channel handling.
+ - Updated targetSdkVersion to 28.
+ - md5: 42cd66b08805452ce2622bc965ed07a3
+
 v1.4.0
 ------
  - Added option to display hour (時辰).

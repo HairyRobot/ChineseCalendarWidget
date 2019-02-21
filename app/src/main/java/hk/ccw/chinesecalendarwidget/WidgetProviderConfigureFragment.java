@@ -280,9 +280,8 @@ public class WidgetProviderConfigureFragment extends PreferenceFragment {
 		@Override
 		protected Void doInBackground(Void... voids) {
 			Activity activity = mActivityRef.get();
-			if (activity != null) {
-				sAppsInfo = getLaunchable(activity);
-			}
+			if (activity == null || activity.isFinishing()) return null;
+			sAppsInfo = getLaunchable(activity);
 			return null;
 		}
 	}

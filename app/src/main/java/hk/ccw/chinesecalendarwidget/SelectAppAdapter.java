@@ -43,9 +43,9 @@ public class SelectAppAdapter extends BaseAdapter {
 		if (convertView == null) {
 			convertView = mInflater.inflate(R.layout.dialog_v_item, parent, false);
 			holder = new ViewHolder();
-			holder.resIcon = (ImageView) convertView.findViewById(R.id.icon);
-			holder.resAppName = (TextView) convertView.findViewById(R.id.app_name);
-			holder.resPackageName = (TextView) convertView.findViewById(R.id.package_name);
+			holder.resIcon = convertView.findViewById(R.id.icon);
+			holder.resAppName = convertView.findViewById(R.id.app_name);
+			holder.resPackageName = convertView.findViewById(R.id.package_name);
 			convertView.setTag(holder);
 		} else {
 			holder = (ViewHolder) convertView.getTag();

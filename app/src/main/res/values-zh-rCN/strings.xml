@@ -3,6 +3,14 @@
     <string name="app_name">中国农历</string>
     <string name="widget_name">中国农历</string>
 
+    <string name="btn_ok">确定</string>
+    <string name="btn_cancel">取消</string>
+
+    <string name="alert_title_ignore_battery_optimization">忽略电池优化</string>
+    <string name="alert_msg_ignore_battery_optimization">请考虑将中国农历添加到\“不优化\”名单中，否则该应用可能无法正常运行。</string>
+
+    <string name="dont_show_this_again">不要再显示</string>
+
     <string name="add_widget">添加小部件</string>
 
     <string name="pref_t_font_type">字体</string>

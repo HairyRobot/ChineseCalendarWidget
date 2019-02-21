@@ -13,5 +13,7 @@ public class WidgetProviderConfigureActivity extends Activity {
 
 		getFragmentManager().beginTransaction()
 				.replace(android.R.id.content, new WidgetProviderConfigureFragment()).commit();
+
+		new IgnoreBatteryOptimizationHelper().showDialog(this);
 	}
 }

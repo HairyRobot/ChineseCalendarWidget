@@ -3,6 +3,14 @@
     <string name="app_name">中國農曆</string>
     <string name="widget_name">中國農曆</string>
 
+    <string name="btn_ok">確定</string>
+    <string name="btn_cancel">取消</string>
+
+    <string name="alert_title_ignore_battery_optimization">忽略電池優化</string>
+    <string name="alert_msg_ignore_battery_optimization">請考慮將中國農曆添加到\“不優化\”名單中，否則該應用可能無法正常運行。</string>
+
+    <string name="dont_show_this_again">不要再顯示</string>
+
     <string name="add_widget">添加小工具</string>
 
     <string name="pref_t_font_type">字體</string>

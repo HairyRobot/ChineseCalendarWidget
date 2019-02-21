@@ -3,6 +3,14 @@
     <string name="app_name">Chinese Calendar Widget</string>
     <string name="widget_name">中國農曆</string>
 
+    <string name="btn_ok">OK</string>
+    <string name="btn_cancel">Cancel</string>
+
+    <string name="alert_title_ignore_battery_optimization">Ignore battery optimizations</string>
+    <string name="alert_msg_ignore_battery_optimization">Please consider adding Chinese Calendar Widget to the \"Don\'t optimize\" list, otherwise, the app may not function.</string>
+
+    <string name="dont_show_this_again">Don\'t show this again</string>
+
     <string name="add_widget">Add widget</string>
 
     <string name="pref_t_font_type">Font</string>

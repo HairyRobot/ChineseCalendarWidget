@@ -9,6 +9,7 @@ v1.5.0
  - Updated notification channel handling.
  - Updated targetSdkVersion to 28.
  - md5: 42cd66b08805452ce2622bc965ed07a3
+ - md5(gplay): 76d1b8d2cc7243443ff37b8a5a77e26d
 
 v1.4.0
 ------
